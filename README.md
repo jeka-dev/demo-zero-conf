@@ -17,7 +17,7 @@ jeka docker: build
 
 Then run the image:
 ```shell
-docker run --rm demo-zero-conf:latest Hello Docker
+docker run --rm demo-zero-conf:latest "Hello Docker"
 ````
 
 Compile to native executable:
@@ -25,9 +25,9 @@ Compile to native executable:
 jeka native: compile includeAllResources=true
 ```
 
-Once compile to native, you can execute it with previous command:
+Once compiled to native, you can execute it (this time, the native executable will run instead of the Java application):
 ```shell
-jeka -p Hello Native
+jeka -p "Hello Native"
 ```
 
 Create Docker image:
