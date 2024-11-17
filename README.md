@@ -40,10 +40,13 @@ Run the native image:
 docker run --rm native-demo-zero-conf:latest Hello JeKa
 ```
 
+Execute directly the application from its GIT repo:
+```shell
+jeka -r https://github.com/jeka-dev/demo-zero-conf.git -p "Hello remote Git" 
+```
+
 ## Notes
-To avoid repeating typing, we can store some configuration in `jeka.properties`file, as:
+To avoid repetitive typing, you can store configuration in the`jeka.properties` file, like this:
 ```properties
 @native.includeAllResources=true
-@native.staticLink=MUSL
-@docker.nativeBaseImage=gcr.io/distroless/static-debian12:nonroot
 ```
