@@ -1,0 +1,5 @@
+== compile ==
+com.github.lalyos:jfiglet:0.0.9
+
+== test ==
+org.junit.jupiter:junit-jupiter:5.11.3
