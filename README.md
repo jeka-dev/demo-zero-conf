@@ -1,8 +1,8 @@
 # JeKa Demo - Build with Zero-Conf
 
-A command-line application that generates and displays an ASCII-art representation of the input string.
+A command-line application that generates and displays an ASCII-art representation of an input string.
 
-This demo shows how this application can be built with Jeka, even though it contains no build configuration.
+This demo illustrates how to build a Java application using Jeka, even without any build configuration.
 
 --------
 
