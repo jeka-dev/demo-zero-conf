@@ -1,44 +1,55 @@
 # JeKa Demo - Build with Zero-Conf
 
-This demo illustrates how to build a Java application using Jeka without requiring any build configuration.
+This demo builds, tests and runs a Java application with JeKa, without any build configuration:
+no `jeka.properties`, no build code. JeKa finds the sources in `src/main/java` and `src/test/java`,
+and the dependencies in [jeka.project.deps](jeka.project.deps).
 
-The built application is a command-line tool that generates and displays an ASCII-art representation of an input string.
+The application is a command-line tool that prints an ASCII-art version of its arguments.
 
-This application relies on third party dependencies, declared in [dependencies.txt](dependencies.txt) file.
+## Prerequisites
 
---------
+- [JeKa installed](https://jeka-dev.github.io/jeka/installation/). JeKa downloads the JDK it needs.
+- Docker, for the Docker images.
 
-Compile, tests, create Jar and run the application with specified arguments:
+## Run it
+
+Compile, create the jar if it is missing, and run the application with arguments (tests are skipped):
 ```shell
 jeka -p Hello JeKa
 ```
 
-Run only tests:
+Run the tests:
 ```shell
 jeka project: test
 ```
 
-Create Docker Image (need Docker cli):
+Build the jar with `project: pack`: it is a library jar, with no `Main-Class`.
+To run it with `-p`, add `-c` so JeKa cleans the output and rebuilds it as a runnable jar:
+```shell
+jeka -c -p Hello JeKa
+```
+
+Create a Docker image (needs Docker):
 ```shell
 jeka docker: build
-````
+```
 
 Then run the image:
 ```shell
 docker run --rm demo-zero-conf:latest "Hello Docker"
-````
+```
 
-Compile to native executable:
+Compile to a native executable (JeKa downloads GraalVM if needed):
 ```shell
 jeka native: compile includeAllResources=true
 ```
 
-Once compiled to native, you can execute it (this time, the native executable will run instead of the Java application):
+Once compiled, `-p` runs the native executable instead of the jar:
 ```shell
 jeka -p "Hello Native"
 ```
 
-Create Docker image:
+Create a native Docker image:
 ```shell
 jeka docker: buildNative native: includeAllResources=true
 ```
@@ -48,13 +59,24 @@ Run the native image:
 docker run --rm native-demo-zero-conf:latest Hello JeKa
 ```
 
-Execute directly the application from its GIT repo:
+Run the application directly from its Git repository, without cloning it yourself:
 ```shell
-jeka -r https://github.com/jeka-dev/demo-zero-conf.git -p "Hello remote Git" 
+jeka -r https://github.com/jeka-dev/demo-zero-conf.git -p "Hello remote Git"
 ```
 
-## Notes
-To avoid repetitive typing, you can store configuration in the`jeka.properties` file, like this:
+## How it works
+
+- `src/main/java` and `src/test/java`: the standard layout, detected by JeKa.
+- [jeka.project.deps](jeka.project.deps): the dependencies, by scope (`[compile]`, `[test]`), with a BOM in `[version]`.
+
+To avoid typing options again, you can store them in a `jeka.properties` file, like this:
 ```properties
 @native.includeAllResources=true
 ```
+
+## Links
+
+- [Build projects](https://jeka-dev.github.io/jeka/tutorials/build-projects/)
+- [project KBean](https://jeka-dev.github.io/jeka/reference/kbeans-project/)
+- [docker KBean](https://jeka-dev.github.io/jeka/reference/kbeans-docker/)
+- [native KBean](https://jeka-dev.github.io/jeka/reference/kbeans-native/)
